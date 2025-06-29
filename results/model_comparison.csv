@@ -1,7 +1,0 @@
-text,true_sentiment,logistic_regression,svm,random_forest,gradient_boosting,ensemble,vader
-five star excellent value money work perfectly,positive,positive,positive,positive,positive,positive,positive
-worst product ive ever bought total waste money,neutral,neutral,neutral,neutral,neutral,neutral,negative
-pretty average NOT_worth NOT_writing NOT_home NOT_about supposed,positive,positive,positive,positive,positive,positive,positive
-couldnt NOT_be NOT_happier NOT_with NOT_this NOT_purchase changed daily routine better,negative,negative,negative,negative,neutral,negative,neutral
-frustrated company product arrived damaged return nightmare,neutral,neutral,neutral,neutral,neutral,neutral,positive
-neither NOT_impressed NOT_disappointed NOT_its NOT_just NOT_about NOT_what expected price,negative,negative,negative,negative,neutral,negative,neutral

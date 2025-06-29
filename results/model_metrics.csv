@@ -1,6 +1,0 @@
-Model,Accuracy,Precision,Recall,F1 Score
-Logistic Regression,1.0,1.0,1.0,1.0
-Svm,1.0,1.0,1.0,1.0
-Random Forest,1.0,1.0,1.0,1.0
-Gradient Boosting,0.6666666666666666,0.5,0.6666666666666666,0.5555555555555555
-Ensemble,1.0,1.0,1.0,1.0
