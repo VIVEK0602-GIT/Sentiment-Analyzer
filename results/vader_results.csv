@@ -1,0 +1,31 @@
+review,sentiment,vader_sentiment,agreement
+This movie was fantastic! I loved every minute of it. The acting was superb and the plot kept me engaged throughout.,positive,positive,True
+Terrible film. Complete waste of time and money. The plot was nonsensical and the acting was wooden.,negative,negative,True
+"It was okay, not great but not bad either. Some parts were good, others fell flat.",neutral,positive,False
+One of the best films I've seen this year! The director's vision was clearly executed and the cinematography was breathtaking.,positive,positive,True
+I hated this movie so much. The dialogue was cringe-worthy and the special effects looked cheap.,negative,negative,True
+Mixed feelings about this one. Some scenes were compelling but overall it just didn't come together for me.,neutral,positive,False
+Absolutely brilliant! The performances were Oscar-worthy and the script was tight and well-paced.,positive,positive,True
+Awful experience. The theater was uncomfortable and the movie itself was boring and predictable.,negative,negative,True
+"Average at best. Nothing memorable about it, but it passed the time.",neutral,positive,False
+I was blown away by this film. Everything from the music to the visuals was perfect.,positive,positive,True
+Don't waste your money on this garbage. The story made no sense and the characters were unlikable.,negative,neutral,False
+"Not bad, not great. Just a middle-of-the-road movie that didn't leave much of an impression.",neutral,positive,False
+Incredible storytelling! I was hooked from the opening scene all the way to the credits.,positive,positive,True
+"Such a disappointment. After all the hype, the movie fell completely flat.",negative,negative,True
+"It has its moments, both good and bad. Overall a mediocre experience.",neutral,negative,False
+This product exceeded all my expectations! The quality is outstanding.,positive,positive,True
+Horrible customer service and the product broke after two uses. Stay away!,negative,negative,True
+"The product is fine. Does what it says, nothing more, nothing less.",neutral,positive,False
+Best purchase I've made all year! Fast shipping and excellent quality.,positive,positive,True
+Complete ripoff. Not even close to the quality advertised in the photos.,negative,neutral,False
+It's decent for the price. Not amazing but gets the job done.,neutral,negative,False
+I'm absolutely in love with this product! Will definitely buy again!,positive,positive,True
+Avoid at all costs. Poor construction and terrible customer support.,negative,negative,True
+"It's an okay product. Some features work well, others not so much.",neutral,positive,False
+Five stars! Excellent value for money and works perfectly.,positive,positive,True
+This has to be the worst product I've ever bought. Total waste of money.,negative,negative,True
+"Pretty average. Not worth writing home about, but does what it's supposed to do.",neutral,positive,False
+Couldn't be happier with this purchase! It's changed my daily routine for the better.,positive,positive,True
+So frustrated with this company. The product arrived damaged and returns were a nightmare.,negative,negative,True
+Neither impressed nor disappointed. It's just about what I expected for the price.,neutral,negative,False

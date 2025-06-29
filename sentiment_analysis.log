@@ -1,0 +1,149 @@
+2025-05-08 22:57:23,327 - sentiment_analysis - INFO - 
+--- Predicting Sentiment for Text ---
+2025-05-08 22:57:23,327 - sentiment_analysis - ERROR - Error in prediction phase: Model file models/ensemble.pkl not found
+2025-05-08 22:57:23,328 - sentiment_analysis - ERROR - Traceback (most recent call last):
+  File "C:\Users\vivek\Desktop\nlp proj\src\main.py", line 296, in main
+    model = load_model(args.model)
+  File "C:\Users\vivek\Desktop\nlp proj\src\train.py", line 179, in load_model
+    raise FileNotFoundError(f"Model file {model_path} not found")
+FileNotFoundError: Model file models/ensemble.pkl not found
+
+2025-05-08 22:58:26,024 - sentiment_analysis - INFO - 
+--- Predicting Sentiment for Text ---
+2025-05-08 22:58:32,271 - sentiment_analysis - INFO - Loading data from data/imdb_reviews_sample.csv...
+2025-05-08 22:58:32,275 - sentiment_analysis - INFO - Loaded 30 records
+2025-05-08 22:58:32,276 - sentiment_analysis - INFO - 
+Sample data:
+2025-05-08 22:58:32,565 - sentiment_analysis - INFO - 
+--- Starting VADER Sentiment Analysis ---
+2025-05-08 23:08:30,282 - sentiment_analysis - INFO - Loading data from data/imdb_reviews_sample.csv...
+2025-05-08 23:08:30,302 - sentiment_analysis - INFO - Loaded 30 records
+2025-05-08 23:08:30,302 - sentiment_analysis - INFO - 
+Sample data:
+2025-05-08 23:08:31,084 - sentiment_analysis - INFO - 
+--- Starting VADER Sentiment Analysis ---
+2025-05-08 23:08:37,835 - sentiment_analysis - INFO - Loading data from data/imdb_reviews_sample.csv...
+2025-05-08 23:08:37,840 - sentiment_analysis - INFO - Loaded 30 records
+2025-05-08 23:08:37,840 - sentiment_analysis - INFO - 
+Sample data:
+2025-05-08 23:08:38,147 - sentiment_analysis - INFO - 
+--- Starting Training Pipeline ---
+2025-05-08 23:08:38,148 - sentiment_analysis - INFO - Preprocessing data...
+2025-05-08 23:08:40,291 - sentiment_analysis - INFO - 
+Sample preprocessed data:
+2025-05-08 23:08:40,547 - sentiment_analysis - INFO - 
+Training models...
+2025-05-08 23:08:59,788 - sentiment_analysis - INFO - Training completed successfully
+2025-05-08 23:08:59,789 - sentiment_analysis - INFO - 
+Evaluating models...
+2025-05-08 23:08:59,789 - sentiment_analysis - INFO - 
+Logistic Regression Evaluation:
+2025-05-08 23:09:00,796 - sentiment_analysis - ERROR - Could not generate feature importance: All arrays must be of the same length
+2025-05-08 23:09:00,796 - sentiment_analysis - INFO - 
+Svm Evaluation:
+2025-05-08 23:09:01,756 - sentiment_analysis - INFO - 
+Random Forest Evaluation:
+2025-05-08 23:09:02,751 - sentiment_analysis - ERROR - Could not generate feature importance: All arrays must be of the same length
+2025-05-08 23:09:02,751 - sentiment_analysis - INFO - 
+Gradient Boosting Evaluation:
+2025-05-08 23:09:03,757 - sentiment_analysis - ERROR - Could not generate feature importance: All arrays must be of the same length
+2025-05-08 23:09:03,757 - sentiment_analysis - INFO - 
+Ensemble Evaluation:
+2025-05-08 23:09:06,085 - sentiment_analysis - ERROR - Error in evaluation phase: 
+Image export using the "kaleido" engine requires the kaleido package,
+which can be installed using pip:
+    $ pip install -U kaleido
+
+2025-05-08 23:09:06,117 - sentiment_analysis - ERROR - Traceback (most recent call last):
+  File "C:\Users\vivek\Desktop\nlp proj\src\main.py", line 236, in main
+    plot_metrics_comparison(metrics_df)
+  File "C:\Users\vivek\Desktop\nlp proj\src\evaluate.py", line 400, in plot_metrics_comparison
+    fig.write_image(save_path, width=1000, height=600)
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\plotly\basedatatypes.py", line 3827, in write_image
+    return pio.write_image(self, *args, **kwargs)
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\plotly\io\_kaleido.py", line 266, in write_image
+    img_data = to_image(
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\plotly\io\_kaleido.py", line 132, in to_image
+    raise ValueError(
+ValueError: 
+Image export using the "kaleido" engine requires the kaleido package,
+which can be installed using pip:
+    $ pip install -U kaleido
+
+
+2025-05-08 23:09:06,118 - sentiment_analysis - INFO - 
+--- Starting VADER Sentiment Analysis ---
+2025-05-08 23:09:06,293 - sentiment_analysis - INFO - 
+Comparing VADER with ML models:
+2025-05-08 23:09:06,305 - sentiment_analysis - INFO - logistic_regression agreement: 1.0000
+2025-05-08 23:09:06,305 - sentiment_analysis - INFO - svm agreement: 1.0000
+2025-05-08 23:09:06,305 - sentiment_analysis - INFO - random_forest agreement: 1.0000
+2025-05-08 23:09:06,306 - sentiment_analysis - INFO - gradient_boosting agreement: 0.6667
+2025-05-08 23:09:06,306 - sentiment_analysis - INFO - ensemble agreement: 1.0000
+2025-05-08 23:09:06,307 - sentiment_analysis - INFO - VADER agreement: 0.3333
+2025-05-08 23:09:30,742 - sentiment_analysis - INFO - Loading data from data/imdb_reviews_sample.csv...
+2025-05-08 23:09:30,747 - sentiment_analysis - INFO - Loaded 30 records
+2025-05-08 23:09:30,747 - sentiment_analysis - INFO - 
+Sample data:
+2025-05-08 23:09:31,043 - sentiment_analysis - INFO - 
+--- Starting Web Interface ---
+2025-05-08 23:09:33,743 - sentiment_analysis - INFO - 
+--- Predicting Sentiment for Text ---
+2025-05-08 23:09:33,872 - sentiment_analysis - ERROR - Error in prediction phase: Vectorizer file models/ensemble_vectorizer.pkl not found
+2025-05-08 23:09:33,873 - sentiment_analysis - ERROR - Traceback (most recent call last):
+  File "C:\Users\vivek\Desktop\nlp proj\src\main.py", line 319, in main
+    vectorizer = load_vectorizer(args.model)
+  File "C:\Users\vivek\Desktop\nlp proj\src\train.py", line 190, in load_vectorizer
+    raise FileNotFoundError(f"Vectorizer file {vectorizer_path} not found")
+FileNotFoundError: Vectorizer file models/ensemble_vectorizer.pkl not found
+
+2025-05-08 23:09:39,715 - sentiment_analysis - INFO - 
+--- Predicting Sentiment for Text ---
+2025-05-08 23:09:41,955 - sentiment_analysis - ERROR - Error in prediction phase: X has 293 features, but LogisticRegression is expecting 51 features as input.
+2025-05-08 23:09:41,980 - sentiment_analysis - ERROR - Traceback (most recent call last):
+  File "C:\Users\vivek\Desktop\nlp proj\src\main.py", line 328, in main
+    prediction = model.predict(text_vec)[0]
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\linear_model\_base.py", line 451, in predict
+    scores = self.decision_function(X)
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\linear_model\_base.py", line 432, in decision_function
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\base.py", line 625, in _validate_data
+    self._check_n_features(X, reset=reset)
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn\base.py", line 414, in _check_n_features
+    raise ValueError(
+ValueError: X has 293 features, but LogisticRegression is expecting 51 features as input.
+
+2025-05-08 23:09:42,271 - sentiment_analysis - ERROR - Error starting web interface: No module named 'src'
+2025-05-08 23:09:42,273 - sentiment_analysis - ERROR - Traceback (most recent call last):
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\tensorflow\python\pywrap_tensorflow.py", line 73, in <module>
+    from tensorflow.python._pywrap_tensorflow_internal import *
+ImportError: DLL load failed while importing _pywrap_tensorflow_internal: A dynamic link library (DLL) initialization routine failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\vivek\Desktop\nlp proj\src\main.py", line 388, in main
+    from app import app
+  File "C:\Users\vivek\Desktop\nlp proj\src\app.py", line 7, in <module>
+    import tensorflow as tf
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\tensorflow\__init__.py", line 40, in <module>
+    from tensorflow.python import pywrap_tensorflow as _pywrap_tensorflow  # pylint: disable=unused-import
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\tensorflow\python\pywrap_tensorflow.py", line 88, in <module>
+    raise ImportError(
+ImportError: Traceback (most recent call last):
+  File "C:\Users\vivek\AppData\Local\Programs\Python\Python310\lib\site-packages\tensorflow\python\pywrap_tensorflow.py", line 73, in <module>
+    from tensorflow.python._pywrap_tensorflow_internal import *
+ImportError: DLL load failed while importing _pywrap_tensorflow_internal: A dynamic link library (DLL) initialization routine failed.
+
+
+Failed to load the native TensorFlow runtime.
+See https://www.tensorflow.org/install/errors for some common causes and solutions.
+If you need help, create an issue at https://github.com/tensorflow/tensorflow/issues and include the entire stack trace above this error message.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\vivek\Desktop\nlp proj\src\main.py", line 393, in main
+    from src.app import app
+ModuleNotFoundError: No module named 'src'
+

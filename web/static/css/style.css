@@ -1,0 +1,115 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+    overflow: hidden;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.shadow {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.sentiment-positive {
+    color: #28a745;
+}
+
+.sentiment-negative {
+    color: #dc3545;
+}
+
+.sentiment-neutral {
+    color: #6c757d;
+}
+
+.sentiment-score-bar {
+    height: 24px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-weight: 500;
+}
+
+.navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Sentiment icons */
+.sentiment-icon-positive {
+    color: #28a745;
+}
+
+.sentiment-icon-negative {
+    color: #dc3545;
+}
+
+.sentiment-icon-neutral {
+    color: #6c757d;
+}
+
+/* Animation for loading state */
+.loading {
+    display: inline-block;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Model badges */
+.model-badge {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.model-badge-vader {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.model-badge-traditional {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.model-badge-neural {
+    background-color: #fd7e14;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mt-3.d-flex {
+        flex-direction: column;
+    }
+    
+    .me-3 {
+        margin-right: 0 !important;
+        margin-bottom: 1rem;
+    }
+} 

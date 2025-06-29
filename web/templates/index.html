@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Sentiment Analysis</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- D3.js for advanced visualizations -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-comments"></i> Advanced Sentiment Analysis Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="analyzer-tab">Analyzer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="batch-tab">Batch Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="about-tab">About Models</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Main Analyzer Section -->
+        <div id="analyzer-section">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h4>Enter Text for Sentiment Analysis</h4>
+                            <div>
+                                <button class="btn btn-sm btn-outline-secondary" id="sample-text-btn">
+                                    <i class="fas fa-lightbulb"></i> Load Sample
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <textarea class="form-control" id="text-input" rows="5" placeholder="Enter a product review, movie review, or any text to analyze its sentiment..."></textarea>
+                            </div>
+                            <div class="mt-3 d-flex flex-wrap">
+                                <div class="me-3 mb-2">
+                                    <label for="model-select" class="form-label">Choose Model:</label>
+                                    <select class="form-select" id="model-select">
+                                        <option value="vader">VADER (Rule-based)</option>
+                                        {% if traditional_models_available %}
+                                        <option value="logistic_regression">Logistic Regression</option>
+                                        <option value="svm">Support Vector Machine</option>
+                                        <option value="random_forest">Random Forest</option>
+                                        <option value="gradient_boosting">Gradient Boosting</option>
+                                        <option value="ensemble">Ensemble Model</option>
+                                        {% endif %}
+                                        {% if neural_models_available %}
+                                        <option value="lstm">LSTM Neural Network</option>
+                                        <option value="cnn">CNN Neural Network</option>
+                                        <option value="bilstm">Bidirectional LSTM</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                                <div class="me-3 mb-2">
+                                    <label for="language-select" class="form-label">Language:</label>
+                                    <select class="form-select" id="language-select">
+                                        <option value="en">English</option>
+                                        <option value="auto" selected>Auto-detect</option>
+                                    </select>
+                                </div>
+                                <div class="mt-auto mb-2">
+                                    <button class="btn btn-primary" id="analyze-btn">
+                                        <i class="fas fa-search"></i> Analyze
+                                    </button>
+                                    <button class="btn btn-success" id="compare-btn">
+                                        <i class="fas fa-balance-scale"></i> Compare All Models
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4" id="results-section" style="display:none">
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-light">
+                            <ul class="nav nav-tabs card-header-tabs" id="result-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="summary-tab" data-bs-toggle="tab" href="#summary">Summary</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="details-tab" data-bs-toggle="tab" href="#details">Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="text-analysis-tab" data-bs-toggle="tab" href="#text-analysis">Text Analysis</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="explanation-tab" data-bs-toggle="tab" href="#explanation">Explanation</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <!-- Summary Tab -->
+                                <div class="tab-pane fade show active" id="summary">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card mb-3">
+                                                <div class="card-header bg-light">
+                                                    <h5>Sentiment Classification</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div id="sentiment-result" class="text-center">
+                                                        <div id="sentiment-icon" class="display-1 mb-3"></div>
+                                                        <h2 id="sentiment-text" class="mb-3"></h2>
+                                                        <div id="confidence-meter" class="progress mb-2 d-none">
+                                                            <div id="confidence-bar" class="progress-bar" role="progressbar"></div>
+                                                        </div>
+                                                        <div id="confidence-text" class="mb-3"></div>
+                                                        <div id="model-used" class="text-muted"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-header bg-light">
+                                                    <h5>Sentiment Scores</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="sentiment-scores-chart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Details Tab -->
+                                <div class="tab-pane fade" id="details">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5>Sentiment Probability Distribution</h5>
+                                            <canvas id="probability-chart"></canvas>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5>Model Details</h5>
+                                            <table class="table table-sm">
+                                                <tbody id="model-details-table">
+                                                    <!-- Model details will be inserted here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Text Analysis Tab -->
+                                <div class="tab-pane fade" id="text-analysis">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Original Text:</h6>
+                                            <p id="original-text" class="border p-2 rounded bg-light"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Preprocessed Text:</h6>
+                                            <p id="processed-text" class="border p-2 rounded bg-light"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <h5>Key Sentiment Terms</h5>
+                                            <div id="key-terms-visualization" class="mt-3" style="height: 200px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Explanation Tab -->
+                                <div class="tab-pane fade" id="explanation">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5>How the Model Works</h5>
+                                            <div id="model-explanation">
+                                                <!-- Model-specific explanation will be inserted here -->
+                                            </div>
+                                            <div class="mt-4">
+                                                <h5>Key Predictive Features</h5>
+                                                <div id="feature-importance-container">
+                                                    <!-- Feature importance visualization will be inserted here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4" id="comparison-section" style="display:none">
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-light">
+                            <h4>Model Comparison</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <canvas id="comparison-chart"></canvas>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h5>Model Results</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group" id="model-results-list">
+                                                <!-- Model results will be added here -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <h5>Model Confidence Comparison</h5>
+                                    <div id="confidence-comparison" class="mt-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Batch Analysis Section -->
+        <div id="batch-section" style="display:none">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-light">
+                            <h4>Batch Sentiment Analysis</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group mb-3">
+                                <label for="batch-input" class="form-label">Enter multiple texts (one per line):</label>
+                                <textarea class="form-control" id="batch-input" rows="6" placeholder="Enter multiple reviews or texts, one per line..."></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="batch-model-select" class="form-label">Choose Model:</label>
+                                <select class="form-select" id="batch-model-select">
+                                    <option value="vader">VADER (Rule-based)</option>
+                                    {% if traditional_models_available %}
+                                    <option value="logistic_regression">Logistic Regression</option>
+                                    <option value="ensemble">Ensemble (Most Accurate)</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" id="batch-analyze-btn">
+                                <i class="fas fa-search"></i> Analyze Batch
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4" id="batch-results" style="display:none">
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-light">
+                            <h4>Batch Analysis Results</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <h5>Sentiment Distribution</h5>
+                                    <canvas id="batch-distribution-chart"></canvas>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Summary Statistics</h5>
+                                    <table class="table">
+                                        <tbody id="batch-statistics">
+                                            <!-- Batch statistics will be inserted here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Text</th>
+                                            <th>Sentiment</th>
+                                            <th>Confidence</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="batch-results-table">
+                                        <!-- Batch results will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Models Section -->
+        <div id="about-section" style="display:none">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-light">
+                            <h4>About the Models</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="modelsAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingVader">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVader">
+                                            VADER (Valence Aware Dictionary and sEntiment Reasoner)
+                                        </button>
+                                    </h2>
+                                    <div id="collapseVader" class="accordion-collapse collapse show" data-bs-parent="#modelsAccordion">
+                                        <div class="accordion-body">
+                                            <p>VADER is a lexicon and rule-based sentiment analysis tool specifically attuned to sentiments expressed in social media. It uses a combination of a sentiment lexicon (a list of lexical features labeled according to their semantic orientation) and grammatical and syntactical rules.</p>
+                                            <p><strong>Strengths:</strong> Works well for social media text, does not require training, handles emoji, slang, and punctuation emphasis.</p>
+                                            <p><strong>Limitations:</strong> Less effective for domain-specific content, doesn't adapt to new language patterns without updates.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {% if traditional_models_available %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTraditional">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTraditional">
+                                            Traditional Machine Learning Models
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTraditional" class="accordion-collapse collapse" data-bs-parent="#modelsAccordion">
+                                        <div class="accordion-body">
+                                            <h5>Logistic Regression</h5>
+                                            <p>A statistical model that uses a logistic function to model a binary dependent variable. In sentiment analysis, it predicts the probability of a text having a particular sentiment.</p>
+                                            <p><strong>Strengths:</strong> Simple, interpretable, works well for linearly separable data, fast training.</p>
+                                            <p><strong>Limitations:</strong> May underperform with complex patterns, requires good feature engineering.</p>
+                                            
+                                            <h5>Support Vector Machine (SVM)</h5>
+                                            <p>A supervised learning model that analyzes data for classification. SVMs find the hyperplane that best separates different sentiment classes in a high-dimensional space.</p>
+                                            <p><strong>Strengths:</strong> Effective in high dimensional spaces, robust to overfitting.</p>
+                                            <p><strong>Limitations:</strong> Slower training on large datasets, less interpretable than logistic regression.</p>
+                                            
+                                            <h5>Random Forest</h5>
+                                            <p>An ensemble learning method that constructs multiple decision trees and outputs the mode of their predictions.</p>
+                                            <p><strong>Strengths:</strong> Robust to overfitting, handles non-linear data well, provides feature importance.</p>
+                                            <p><strong>Limitations:</strong> Less interpretable than single decision trees, slower prediction time.</p>
+                                            
+                                            <h5>Ensemble Model</h5>
+                                            <p>Combines multiple individual models to improve overall performance and robustness.</p>
+                                            <p><strong>Strengths:</strong> Often achieves better accuracy, more robust to different types of data.</p>
+                                            <p><strong>Limitations:</strong> More complex, higher computational cost, less interpretable.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                {% if neural_models_available %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingNeural">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNeural">
+                                            Neural Network Models
+                                        </button>
+                                    </h2>
+                                    <div id="collapseNeural" class="accordion-collapse collapse" data-bs-parent="#modelsAccordion">
+                                        <div class="accordion-body">
+                                            <h5>LSTM (Long Short-Term Memory)</h5>
+                                            <p>A type of recurrent neural network capable of learning long-term dependencies in sequence data like text.</p>
+                                            <p><strong>Strengths:</strong> Captures sequential information and context, handles variable-length inputs well.</p>
+                                            <p><strong>Limitations:</strong> Computationally expensive, requires more data, less interpretable.</p>
+                                            
+                                            <h5>CNN (Convolutional Neural Network)</h5>
+                                            <p>Neural networks that use convolution operations to analyze text data by detecting important patterns regardless of their position.</p>
+                                            <p><strong>Strengths:</strong> Efficient at capturing local patterns, faster training than RNNs.</p>
+                                            <p><strong>Limitations:</strong> May miss long-range dependencies, less interpretable.</p>
+                                            
+                                            <h5>Bidirectional LSTM</h5>
+                                            <p>An extension of the standard LSTM that processes data in both forward and backward directions.</p>
+                                            <p><strong>Strengths:</strong> Captures context from both past and future words, often improves performance.</p>
+                                            <p><strong>Limitations:</strong> Higher computational cost, more parameters to train.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingEvaluation">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvaluation">
+                                            Model Evaluation and Metrics
+                                        </button>
+                                    </h2>
+                                    <div id="collapseEvaluation" class="accordion-collapse collapse" data-bs-parent="#modelsAccordion">
+                                        <div class="accordion-body">
+                                            <p>Our models are evaluated using the following metrics:</p>
+                                            <ul>
+                                                <li><strong>Accuracy:</strong> The proportion of correctly classified instances.</li>
+                                                <li><strong>Precision:</strong> The proportion of positive identifications that were actually correct.</li>
+                                                <li><strong>Recall:</strong> The proportion of actual positives that were correctly identified.</li>
+                                                <li><strong>F1 Score:</strong> The harmonic mean of precision and recall.</li>
+                                            </ul>
+                                            <p>The ensemble model typically achieves the best overall performance by combining the strengths of multiple individual models.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="error-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="error-message">
+                    <!-- Error message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">Advanced Sentiment Analysis Project &copy; 2025</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

@@ -1,0 +1,9 @@
+2025-05-08 23:08:15,928 - sentiment_analysis - INFO - Loading data from data/imdb_reviews_sample.csv...
+2025-05-08 23:08:15,928 - sentiment_analysis - ERROR - Error loading data: Data file data/imdb_reviews_sample.csv not found
+2025-05-08 23:08:15,929 - sentiment_analysis - ERROR - Traceback (most recent call last):
+  File "C:\Users\vivek\Desktop\nlp proj\src\main.py", line 69, in main
+    df = load_data(args.data)
+  File "C:\Users\vivek\Desktop\nlp proj\src\utils.py", line 14, in load_data
+    raise FileNotFoundError(f"Data file {path} not found")
+FileNotFoundError: Data file data/imdb_reviews_sample.csv not found
+
